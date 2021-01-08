@@ -39,6 +39,11 @@ export default function Home() {
       .catch(console.error);
   };
 
+  const handleClickCreateButton = () => {
+    setForm({ name: "", age: "", email: "" });
+    setEditMode(true);
+  };
+
   const fecthPersons = () => {
     axios
       .get(url)
@@ -55,6 +60,7 @@ export default function Home() {
   }, []);
 
   const deletePost = (id) => {
+    setEditMode(null);
     axios
       .delete(`${url}${id}`)
       .then(() => {
@@ -74,6 +80,18 @@ export default function Home() {
     }
   };
 
+  const handlePressSubmit = () => {
+    axios
+      .post(url, form)
+      .then(() => {
+        console.log("sucesso");
+        fecthPersons();
+        setEditMode(null);
+      })
+      // Catch é uma forma muito eficiente de tratar erros
+      .catch(console.error);
+  };
+
   // O editar vai navegar para a página "editar" com o id da pessoa!!!
 
   const listPerson = persons.map((person, index) => {
@@ -87,52 +105,6 @@ export default function Home() {
     );
   });
 
-  const FormEdit = () => (
-    <div>
-      <p>
-        <label>
-          Name:{" "}
-          <input
-            type="text"
-            onChange={(event) => {
-              event.preventDefault();
-              handleChangeName(event.currentTarget.value)}}
-            value={form.name}
-          ></input>
-        </label>
-      </p>
-      <p>
-        <label>
-          Email:{" "}
-          <input
-            type="text"
-            onChange={(event) => handleChangeEmail(event.currentTarget.value)}
-            value={form.email}
-          ></input>
-        </label>
-      </p>
-      <p>
-        <label>
-          Age:{" "}
-          <input
-            type="text"
-            onChange={(event) => handleChangeAge(event.currentTarget.value)}
-            value={form.age}
-          ></input>
-        </label>
-      </p>
-      <p>
-        <button
-          onClick={() => {
-            handlePressSubmitEdit();
-          }}
-        >
-          Submit
-        </button>
-      </p>
-    </div>
-  );
-
   return (
     <div className={styles.container}>
       <Head>
@@ -141,12 +113,61 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        {editMode ? <FormEdit /> : null}
+        {editMode ? (
+          <div>
+            {editMode === true ? null : (
+              <div>
+                <p>ID: {editMode}</p>
+              </div>
+            )}
+            <div>
+              <label>
+                Name:{" "}
+                <input
+                  type="text"
+                  onChange={(event) => {
+                    event.preventDefault();
+                    handleChangeName(event.currentTarget.value);
+                  }}
+                  value={form.name}
+                ></input>
+              </label>
+            </div>
+            <div>
+              <label>
+                Email:{" "}
+                <input
+                  type="text"
+                  onChange={(event) =>
+                    handleChangeEmail(event.currentTarget.value)
+                  }
+                  value={form.email}
+                ></input>
+              </label>
+            </div>
+            <div>
+              <label>
+                Age:{" "}
+                <input
+                  type="text"
+                  onChange={(event) =>
+                    handleChangeAge(event.currentTarget.value)
+                  }
+                  value={form.age}
+                ></input>
+              </label>
+            </div>
+            <button
+              onClick={
+                editMode !== true ? handlePressSubmitEdit : handlePressSubmit
+              }
+            >
+              {editMode === true ? "Criar" : "Editar"}
+            </button>
+          </div>
+        ) : null}
         <p>
-          <a href="/create">
-            {" "}
-            <button>Create</button>{" "}
-          </a>
+          <button onClick={handleClickCreateButton}>Create</button>{" "}
         </p>
 
         <div>
