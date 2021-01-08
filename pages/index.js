@@ -10,6 +10,7 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
+        <a href='/create'>Criar</a>
         <h1 className={styles.title}>
           Meu nome é João!!!!!!!
         </h1>
