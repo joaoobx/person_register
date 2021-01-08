@@ -190,3 +190,15 @@ export default function Home() {
     </div>
   );
 }
+
+
+//   ajudei a escrever da maneira mais correta possível.. evitar error iniciante..
+
+// criei problemas nos quais vc precisaram APRENDER a CRIAR estratégias para resolver
+
+// Vercel (urls quebrados)
+// Github
+// ReactJS
+// HTML
+// Axios -> Consome uma API
+// JSON-Server (simula uma API)
