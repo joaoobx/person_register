@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 
-import axios from "axios";
+import axios from "axios";  // biblioteca / módulo
 
-const url = "http://127.0.0.1:3000/persons/";
+const url = "http://127.0.0.1:3000/persons/";  // servidor API no nosso caso JSON-Server
 
 export default function Home() {
-  const [persons, setPersons] = useState([]);
+  const [persons, setPersons] = useState([]);  // criar um estrado e uma func que altera o estado
   const [editMode, setEditMode] = useState();
   const [form, setForm] = useState({ name: "", age: "", email: "" });
 
@@ -55,9 +55,9 @@ export default function Home() {
       .catch(console.error);
   };
 
-  useEffect(() => {
+  useEffect(() => {  // como nao tem dependencias, só é executado o codigo abaixo quando inicia
     fecthPersons();
-  }, []);
+  }, []);  // as dependencias ficam dentro do []
 
   const deletePost = (id) => {
     setEditMode(null);
@@ -94,7 +94,7 @@ export default function Home() {
 
   // O editar vai navegar para a página "editar" com o id da pessoa!!!
 
-  const listPerson = persons.map((person, index) => {
+  const listPerson = persons.map((person, index) => {  // persons é a lista e pessoas
     return (
       <p key={String(person.id)}>
         Name:{person.name} - E-mail:{person.email} - Age:{person.age} - ID:{" "}
